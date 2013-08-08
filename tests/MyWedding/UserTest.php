@@ -5,7 +5,10 @@ namespace MyWedding;
 use MyWedding\User;
 
 /**
- * Requirement a Model which represets a User which has an accessor methods for an ID and Password
+ * Requirement a Model which represets a User which has an accessor methods for an ID and E-mail
+ * 
+ * ID: integer
+ * E-mail: string and valid e-mail format.
  */
 class UserTest extends \PHPUnit_Framework_TestCase
 {

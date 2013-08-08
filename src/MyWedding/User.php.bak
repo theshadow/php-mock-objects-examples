@@ -36,7 +36,8 @@ class User
     	{
             throw new \InvalidArgumentException('Email must be a string value.');
     	}
-    	elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    	elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) 
+        {
     		throw new \InvalidArgumentException('Email must be a valid e-mail address');
     	}
 
