@@ -23,4 +23,35 @@ class UserTest extends \PHPUnit_Framework_TestCase
 	{
 		$this->assertNull($this->model->getId());
 	}
+
+	public function testThatSetIdReturnsSelf()
+	{
+		$id    = mt_rand(); 
+		$model = $this->model->setId($id);
+		$this->assertSame($this->model, $model);
+
+		return array($id, $model);
+	}
+
+	/**
+	 * @depends testThatSetIdReturnsSelf
+	 */
+	public function testThatGetIdReturnsSetValue(array $params)
+	{
+		list($id, $model) = $params;
+
+		$this->assertEquals($id, $model->getId());
+	}
+
+	/**
+	 *
+	 *
+	 * @expectedException \InvalidArgumentException
+	 */
+	public function testThatSetIdThrowsInvalidArgExceptionWhenIdIsNotInt()
+	{
+		$id = uniqid();
+		
+		$this->model->setId($id);	
+	}
 }
