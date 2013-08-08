@@ -1,0 +1,56 @@
+<?php
+
+namespace MyWedding\Controller;
+
+use MyWedding\Service\UserService;
+
+class SessionController 
+{
+	protected $userService;
+
+	public function sessionsAction($request)
+	{
+		if ($request['method'] !== 'POST') 
+		{
+			throw new \BadFunctionCallException('Request must be a POST.');
+		}
+
+		if (!isset($request['form']['email']) || !isset($request['form']['password']))
+		{
+			throw new \BadFunctionCallException('Email and Password must be defined');
+		}
+
+		$user = $this->getUserService()->fetchByEmailAndPassword($request['form']['email'], $request['form']['password']);
+
+		$response = array(
+		);
+
+		if (is_null($user))
+		{
+			$response['code'] = 401;
+			$response['body'] = 'No user found with that email/password combination.';
+
+			return $response;
+		}
+
+		$response['code'] = 201;
+		$response['body'] = 'User authenticated';
+
+		return $response;
+	}
+
+	public function setUserService(UserService $service)
+	{
+		$this->userService = $service;
+		return $this;
+	}
+
+	public function getUserService()
+	{
+		if (is_null($this->userService)) 
+		{
+			$this->userService = new UserService(); 
+		}
+		return $this->userService;
+	}
+}
